@@ -1,12 +1,14 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #171717; /* Cor de fundo escura */
+  --foreground: #ededed; /* Cor de texto clara */
+  --accent: #8b0000; /* Vinho suave para destaque */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #121212; /* Fundo ainda mais escuro para o modo dark */
+    --foreground: #e0e0e0; /* Texto claro, mas suave */
+    --accent: #8b0000; /* Mantemos o vermelho vinho para o modo dark */
   }
 }
 
@@ -31,8 +33,26 @@ body {
 }
 
 a {
-  color: inherit;
+  color: var(--accent); /* Links em vermelho vinho */
   text-decoration: none;
+}
+
+a:hover {
+  color: #ff4d4d; /* Sutil efeito de hover mais claro */
+}
+
+button {
+  background-color: var(--accent); /* Botões com fundo vermelho vinho */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b30000; /* Hover de botão com uma tonalidade mais forte */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,3 +60,4 @@ a {
     color-scheme: dark;
   }
 }
+

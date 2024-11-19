@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1a1a1a; /* Fundo escuro */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Espaçamento entre os campos */
+  padding: 2rem;
+  border: 1px solid #333; /* Borda escura */
+  border-radius: 8px;
+  background-color: #2e2e2e; /* Fundo do formulário mais claro */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Sombra mais intensa */
+  width: 100%;
+  max-width: 400px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: #e4e4e4; /* Texto em cinza claro */
+}
+
+.input {
+  padding: 0.75rem; /* Aumenta a altura do input */
+  font-size: 1rem;
+  color: #f5f5f5; /* Texto claro no input */
+  background-color: #3c3c3c; /* Fundo do input escuro */
+  border: 1px solid #555; /* Borda escura */
+  border-radius: 4px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #a04c5c; /* Vinho mais suave */
+  box-shadow: 0 0 4px #a04c5c;
+}
+
+.dateField {
+  flex: 1; /* Ambos os campos dividem o espaço igualmente */
+}
+
+.buttonSubmit {
+  padding: 1rem; /* Altura maior no botão */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #f5f5f5; /* Texto claro */
+  background-color: #a04c5c; /* Fundo vinho mais suave */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttonSubmit:hover {
+  background-color: #b76a79; /* Vinho ainda mais claro no hover */
+}
+
+.buttonSubmit:focus {
+  outline: none;
+  box-shadow: 0 0 8px #b76a79; /* Glow no foco */
+}
