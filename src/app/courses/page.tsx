@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
 import { getCourses } from "@/requests/courses";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export default function Page() {
   const [courses, setCourses] = useState([]);
@@ -23,19 +24,39 @@ export default function Page() {
   }
 
   return (
-    <div className={styles.courseList}>
-      {courses.map((course: any) => (
-        <div key={course.id} className={styles.courseCard}>
-          <h1 className={styles.courseTitle}>{course.title}</h1>
-          <p className={styles.courseDescription}>{course.description}</p>
-          <p className={styles.courseDate}>
-            <strong>Início:</strong> {course.start_date}
-          </p>
-          <p className={styles.courseDate}>
-            <strong>Término:</strong> {course.end_date}
-          </p>
-        </div>
-      ))}
+    <div className={styles.container}>
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Pesquisar curso"
+          className={styles.searchInput}
+        />
+      </div>
+      <div className={styles.courseList}>
+        {courses.map((course: any) => (
+          <Link key={course.id} className={styles.courseCard} href={`/courses/${course.slug}`}>
+            {course.image ? (
+              <img
+                src={course.image}
+                alt={`Imagem do curso ${course.title}`}
+                className={styles.courseImage}
+              />
+            ) : (
+              <div className={styles.placeholderImage}>
+                <span>Sem imagem</span>
+              </div>
+            )}
+            <h1 className={styles.courseTitle}>{course.title}</h1>
+            <p className={styles.courseDescription}>{course.description}</p>
+            <p className={styles.courseDate}>
+              <strong>Início:</strong> {course.start_date}
+            </p>
+            <p className={styles.courseDate}>
+              <strong>Término:</strong> {course.end_date}
+            </p>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
