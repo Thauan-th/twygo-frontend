@@ -3,7 +3,7 @@
   min-height: 100vh;
 }
 
-.searchContainer {
+.addCourseContainer {
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -11,15 +11,18 @@
   margin-bottom: 20px;
 }
 
-.searchInput {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px;
-  border: 1px solid #ddd;
+.addCourse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
   border-radius: 5px;
+  padding: 10px 20px;
   font-size: 1rem;
-  background-color: #f0f0f0;
-  color: #333333;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .courseList {

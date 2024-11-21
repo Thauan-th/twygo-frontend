@@ -65,3 +65,9 @@
   outline: none;
   box-shadow: 0 0 8px #b76a79; /* Glow no foco */
 }
+
+.errors {
+  font-size: 0.875rem; /* Texto menor */
+  color: #ff4d4d; /* Vermelho */
+  margin-top: 0.5rem; /* Espaçamento do topo */
+}

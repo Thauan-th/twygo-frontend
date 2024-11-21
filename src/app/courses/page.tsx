@@ -25,12 +25,10 @@ export default function Page() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder="Pesquisar curso"
-          className={styles.searchInput}
-        />
+      <div className={styles.addCourseContainer}>
+        <Link href="/courses/new" className={styles.addCourse}>
+          Adicionar Novo Curso
+        </Link>
       </div>
       <div className={styles.courseList}>
         {courses.map((course: any) => (
