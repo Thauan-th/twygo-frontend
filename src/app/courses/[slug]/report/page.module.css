@@ -1,0 +1,121 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.backLink {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.newReport {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.newReportButton {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+
+.newReportButton:hover {
+  background-color: #218838;
+}
+
+.courseTitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.reportList {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+}
+
+.reportItem {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+}
+
+.reportDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.reportTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.reportDate {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.downloadLink {
+  color: #28a745;
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.downloadLink:hover {
+  color: #218838;
+}
+
+@media (max-width: 768px) {
+  .newReportButton {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .reportList {
+    width: 100%;
+    padding: 0;
+  }
+
+  .reportItem {
+    margin-bottom: 10px;
+    padding: 15px;
+  }
+
+  .courseTitle {
+    font-size: 20px;
+  }
+
+  .reportTitle {
+    font-size: 16px;
+  }
+
+  .downloadLink {
+    font-size: 14px;
+  }
+}
