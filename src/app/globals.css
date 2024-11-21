@@ -32,15 +32,6 @@ body {
   margin: 0;
 }
 
-a {
-  color: var(--accent); /* Links em vermelho vinho */
-  text-decoration: none;
-}
-
-a:hover {
-  color: #ff4d4d; /* Sutil efeito de hover mais claro */
-}
-
 button {
   background-color: var(--accent); /* Botões com fundo vermelho vinho */
   color: white;

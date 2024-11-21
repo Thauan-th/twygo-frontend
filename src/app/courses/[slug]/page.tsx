@@ -3,8 +3,9 @@ import axios from "axios";
 import styles from "./page.module.css";
 import { useRouter, useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import LessonModal from "@/components/courses/lessonModal";
+import Link from "next/link";
 
-// Interface para a aula
 interface Lesson {
   title: string;
   description: string;
@@ -22,7 +23,7 @@ interface Course {
 
 export default function Page() {
   const { push } = useRouter();
-  const { slug } = useParams();
+  const { slug } = useParams() as { slug: string };
 
   const [course, setCourse] = useState<Course>({
     title: "",
@@ -50,87 +51,59 @@ export default function Page() {
     })();
   }, [slug]);
 
-  const handleLessonSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const response = await axios.post(
-      `http://localhost:3000/courses/${slug}/lessons`,
-      newLesson
-    );
-
-    if (response.status === 201) {
-      setCourse((prevCourse) => ({
-        ...prevCourse,
-        lessons: [...prevCourse.lessons, response.data],
-      }));
-      setModalOpen(false);
-    }
-  };
-
   return (
     <div className={styles.container}>
+      <Link href="/courses">Voltar</Link>
+
       <h1 className={styles.courseTitle}>{course.title}</h1>
       <p className={styles.courseDescription}>{course.description}</p>
+
+      <div className={styles.buttonContainer}>
+        <button
+          className={styles.addLessonButton}
+          onClick={() => setModalOpen(true)}
+        >
+          Adicionar Aula
+        </button>
+        <Link
+          className={styles.generateReportLink}
+          href={`/courses/${slug}/report`}
+        >
+          Gerar Relatório
+        </Link>
+      </div>
 
       <h2>Aulas</h2>
       <ul className={styles.lessons}>
         {course.lessons.map((lesson, index) => (
           <li key={index} className={styles.lessonItem}>
-            <h3>{lesson.title}</h3>
-            <p>{lesson.description}</p>
-            {lesson.video_url && (
-              <video controls className={styles.videoPlayer}>
-                <source src={lesson.video_url} type="video/mp4" />
-                Seu navegador não suporta a tag de vídeo.
-              </video>
-            )}
+            <div className={styles.lessonDetails}>
+              <div className={styles.lessonInfo}>
+                <h3 className={styles.lessonTitle}>
+                  <span className={styles.lessonNumber}>{index + 1}: </span>
+                  {lesson.title}
+                </h3>
+                <p className={styles.lessonDescription}>{lesson.description}</p>
+              </div>
+
+              {lesson.video_url && (
+                <div className={styles.videoWrapper}>
+                  <video controls className={styles.videoPlayer}>
+                    <source src={lesson.video_url} type="video/mp4" />
+                    Seu navegador não suporta a tag de vídeo.
+                  </video>
+                </div>
+              )}
+            </div>
           </li>
         ))}
       </ul>
 
-      <button
-        className={styles.addLessonButton}
-        onClick={() => setModalOpen(true)}
-      >
-        Adicionar Aula
-      </button>
-
-      {/* Modal para adicionar aula */}
       {modalOpen && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>Adicionar Aula</h3>
-            <form onSubmit={handleLessonSubmit}>
-              <label>Título:</label>
-              <input
-                type="text"
-                value={newLesson.title}
-                onChange={(e) =>
-                  setNewLesson({ ...newLesson, title: e.target.value })
-                }
-              />
-              <label>Descrição:</label>
-              <textarea
-                value={newLesson.description}
-                onChange={(e) =>
-                  setNewLesson({ ...newLesson, description: e.target.value })
-                }
-              />
-              <label>URL do vídeo:</label>
-              <input
-                type="text"
-                value={newLesson.video_url}
-                onChange={(e) =>
-                  setNewLesson({ ...newLesson, video_url: e.target.value })
-                }
-              />
-              <button type="submit">Salvar Aula</button>
-              <button type="button" onClick={() => setModalOpen(false)}>
-                Fechar
-              </button>
-            </form>
-          </div>
-        </div>
+        <LessonModal
+          courseSlug={slug || ""}
+          onClose={() => setModalOpen(false)}
+        />
       )}
     </div>
   );

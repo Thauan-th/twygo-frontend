@@ -1,90 +1,122 @@
 /* page.module.css */
 .container {
   padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .courseTitle {
   font-size: 2rem;
-  margin-bottom: 10px;
+  font-weight: bold;
+  padding-top: 10px;
 }
 
 .courseDescription {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  color: #777;
   margin-bottom: 20px;
 }
 
-.lessonList {
+.lessons {
   list-style-type: none;
   padding: 0;
 }
 
 .lessonItem {
+  margin-bottom: 30px;
+  background-color: #444;
+  border-radius: 8px;
+  padding: 15px;
+  color: #fff;
+}
+
+.lessonDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.lessonInfo {
   margin-bottom: 15px;
 }
 
-.addLessonButton {
-  background-color: #4caf50;
-  color: white;
+.lessonTitle {
+  font-size: 1.5rem; /* Título maior */
+  font-weight: bold;
+  margin-bottom: 5px;
+  background-color: #555;
   padding: 10px;
-  border: none;
-  cursor: pointer;
-  margin-top: 20px;
+  border-radius: 5px;
 }
 
-.addLessonButton:hover {
-  background-color: #45a049;
+.lessonNumber {
+  font-size: 1rem; /* Tamanho do número da aula */
+  color: #888;    /* Cor mais suave para o número */
+  margin-right: 10px;
 }
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+.lessonDescription {
+  font-size: 1rem;
+  background-color: #666;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.videoWrapper {
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.modalContent {
-  background-color: white;
-  padding: 20px;
+.videoPlayer {
+  width: 100%;
+  height: 300px;
   border-radius: 8px;
-  width: 400px;
-  max-width: 100%;
+  background-color: #333;
 }
 
-.modalContent form {
-  display: flex;
-  flex-direction: column;
+.addLessonButton {
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  width: 50%;
 }
-
-.modalContent label {
-  margin-bottom: 8px;
-}
-
-.modalContent input,
-.modalContent textarea {
-  margin-bottom: 10px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.modalContent button {
+.generateReportLink {
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  width: 50%;
+  text-align: center;
   padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.generateReportLink:hover {
+  background-color: #2e6c4a;
+  color: white;
+}
+
+.addLessonButton {
   background-color: #007bff;
   color: white;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
+  width: 50%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  text-align: center;
 }
 
-.modalContent button[type="button"] {
-  background-color: #f44336;
-}
-
-.modalContent button:hover {
+.addLessonButton:hover {
   background-color: #0056b3;
 }
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between; /* Espaça os botões de forma equidistante */
+  width: 100%;
+  gap: 10px; /* Espaço entre os botões */
+  margin-top: 20px; /* Espaçamento superior */
+}
+
