@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Twygo UI
 
-## Getting Started
+Projeto destinado a criação de uma SPA (Single Page Application) para a Twygo, uma plataforma de cursos online.
 
-First, run the development server:
+## Índice
+- [Como rodar](#como-rodar)
+  - [make start](#make-start)
+  - [make stop](#make-stop)
+- [Rotas](#rotas)
+  - [cursos](#cursos)
+  - [cursos/new](#novocurso)
+  - [cursos/:slug](#pagina-do-curso)
+  - [cursos/:slug/edit](#editar-curso)
+  - [cursos/:slug/report](#relatorio-do-curso)
+
+
+## Como rodar
+
+Esse projeto conta com um Makefile para facilitar a execução de comandos. Para rodar o projeto, basta executar o comando `make start` e acessar o endereço `http://localhost:3001`.
+
+### make start
+
+Esse comando irá instalar as dependências do projeto e rodar o servidor de desenvolvimento.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+make start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### make stop
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Esse comando irá parar o servidor de desenvolvimento.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+make stop
+```
 
-## Learn More
+## Rotas
 
-To learn more about Next.js, take a look at the following resources:
+### Cursos `/cursos`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Essa rota é a página inicial da aplicação, onde são listados todos os cursos cadastrados.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Novo Curso `/cursos/new`
 
-## Deploy on Vercel
+Essa rota é responsável por criar um novo curso.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Página do Curso `/cursos/:slug`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Essa rota é responsável por exibir os detalhes de um curso.
+
+### Editar Curso `/cursos/:slug/edit`
+
+Essa rota é responsável por editar um curso.
+
+### Relatório do Curso `/cursos/:slug/report`
+
+Essa rota é responsável por exibir e criar relatórios de um curso.
+
