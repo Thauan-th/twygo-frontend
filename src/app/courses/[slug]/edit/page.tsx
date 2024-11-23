@@ -97,7 +97,7 @@ export default function Page() {
       });
   };
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return <div>Carregando...</div>;
   }
 
@@ -166,7 +166,7 @@ export default function Page() {
           type="date"
           name="end_date"
           className={styles.input}
-          value={course.end_date}
+          value={course.end_date || ''}
           onChange={handleInputChange}
         />
 

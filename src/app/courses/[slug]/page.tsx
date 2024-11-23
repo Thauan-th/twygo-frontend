@@ -15,7 +15,7 @@ export default function Page() {
   const { slug } = useParams() as { slug: string };
   const [modalOpen, setModalOpen] = useState(false);
 
-  const { data, isLoading, error } = useQuery<Course>({
+  const { data, isLoading, error, refetch } = useQuery<Course>({
     queryKey: ["course", slug],
     queryFn: () => getCourse(slug, "include_lessons=true"),
     enabled: !!slug,
@@ -115,7 +115,7 @@ export default function Page() {
       {modalOpen && (
         <LessonModal
           courseSlug={slug || ""}
-          onClose={() => setModalOpen(false)}
+          onClose={() => {setModalOpen(false), refetch()}}
         />
       )}
     </div>
