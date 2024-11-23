@@ -56,7 +56,6 @@ export default function Page() {
 
       {reports.length > 0 ? (
         <>
-          <h1 className={styles.courseTitle}>Relatórios</h1>
           <ul className={styles.reportList}>
             {reports.map((report: Report, index: number) => (
               <li key={index} className={styles.reportItem}>
@@ -65,13 +64,17 @@ export default function Page() {
                   <p className={styles.reportDate}>
                     Data: {new Date(report.created_at).toLocaleDateString()}
                   </p>
-                  <a
+                  { report.file ? (
+                    <a
                     href={report.file}
                     target="_blank"
                     className={styles.downloadLink}
                   >
-                    Baixar
+                    Ver
                   </a>
+                  ) : (
+                    <span className={styles.noFile}>Sem arquivo</span>
+                  )}
                 </div>
               </li>
             ))}

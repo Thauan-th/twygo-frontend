@@ -2,6 +2,7 @@
 import axios from "axios";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { useState } from "react";
 
@@ -81,6 +82,9 @@ export default function Page() {
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
+        <div className={styles.backLink}>
+          <Link href="/courses">Voltar</Link>
+        </div>
         {errors.length > 0 && (
           <div className={styles.errors}>
             <h1>Erro ao criar o curso</h1>

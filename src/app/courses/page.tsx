@@ -4,6 +4,7 @@ import { getCourses } from "@/requests/courses";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
+import { Button } from "@/components/ui/button"
 
 export default function Page() {
   const [courses, setCourses] = useState([]);
