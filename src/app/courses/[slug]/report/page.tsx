@@ -41,7 +41,7 @@ export default function Page() {
 
   return (
     <div className={styles.container}>
-      <Link href="/courses" className={styles.backLink}>
+      <Link href={`/courses/${slug}`} className={styles.backLink}>
         Voltar
       </Link>
 
