@@ -1,59 +1,65 @@
 "use client";
-import axios from "axios";
+
+import { Course } from "@/types";
 import styles from "./page.module.css";
-import { useRouter, useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import LessonModal from "@/components/courses/lessonModal";
 import Link from "next/link";
-
-interface Lesson {
-  title: string;
-  description: string;
-  video_url: string;
-}
-
-interface Course {
-  title: string;
-  description: string;
-  start_date: string;
-  end_date: string;
-  image: string | File;
-  lessons: Lesson[];
-}
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { getCourse, deleteCourse } from "@/requests/courses";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const { push } = useRouter();
   const { slug } = useParams() as { slug: string };
-
-  const [course, setCourse] = useState<Course>({
-    title: "",
-    description: "",
-    start_date: "",
-    end_date: "",
-    image: "",
-    lessons: [],
-  });
-
   const [modalOpen, setModalOpen] = useState(false);
-  const [newLesson, setNewLesson] = useState<Lesson>({
-    title: "",
-    description: "",
-    video_url: "",
+
+  const { data, isLoading, error } = useQuery<Course>({
+    queryKey: ["course", slug],
+    queryFn: () => getCourse(slug, "include_lessons=true"),
+    enabled: !!slug,
   });
 
-  useEffect(() => {
-    (async () => {
-      const response = await axios.get(
-        `http://localhost:3000/courses/${slug}?include_lessons=true`
-      );
-      const { data } = response;
-      setCourse(data);
-    })();
-  }, [slug]);
+  const deleteMutation = useMutation<void, Error, string>({
+    mutationFn: deleteCourse,
+    onSuccess: () => {
+      alert("Curso deletado com sucesso!");
+      push("/courses");
+    },
+    onError: () => {
+      alert("Erro ao deletar o curso.");
+    },
+  });
+
+  const handleDelete = () => {
+    if (confirm("Você tem certeza que deseja deletar este curso?")) {
+      deleteMutation.mutate(slug);
+    }
+  };
+
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div>Erro ao carregar os dados do curso.</div>;
+  }
+
+  const course = data as Course;
 
   return (
     <div className={styles.container}>
-      <Link href="/courses">Voltar</Link>
+      <div className={styles.header}>
+        <Link href="/courses">Voltar</Link>
+        <button
+          className={styles.editButton}
+          type="button"
+          onClick={handleDelete}
+        >
+          Deletar
+        </button>
+      </div>
 
       <h1 className={styles.courseTitle}>{course.title}</h1>
       <p className={styles.courseDescription}>{course.description}</p>

@@ -1,8 +1,14 @@
-/* page.module.css */
 .container {
   padding: 20px;
   max-width: 900px;
   margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .courseTitle {
@@ -40,7 +46,7 @@
 }
 
 .lessonTitle {
-  font-size: 1.5rem; /* Título maior */
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 5px;
   background-color: #555;
@@ -49,8 +55,8 @@
 }
 
 .lessonNumber {
-  font-size: 1rem; /* Tamanho do número da aula */
-  color: #888;    /* Cor mais suave para o número */
+  font-size: 1rem; 
+  color: #888;
   margin-right: 10px;
 }
 
@@ -114,9 +120,9 @@
 
 .buttonContainer {
   display: flex;
-  justify-content: space-between; /* Espaça os botões de forma equidistante */
+  justify-content: space-between;
   width: 100%;
-  gap: 10px; /* Espaço entre os botões */
-  margin-top: 20px; /* Espaçamento superior */
+  gap: 10px;
+  margin-top: 20px;
 }
 
