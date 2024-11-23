@@ -19,6 +19,7 @@ export default function Page() {
     queryKey: ["course", slug],
     queryFn: () => getCourse(slug, "include_lessons=true"),
     enabled: !!slug,
+    refetchOnMount: true,
   });
 
   const deleteMutation = useMutation<void, Error, string>({

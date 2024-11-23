@@ -3,14 +3,30 @@ import axios from "axios";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getCourse } from "@/requests/courses";
+import { Course } from "@/types";
 
-import { useState } from "react";
+const updateCourse = async (slug: string, courseData: FormData) => {
+  const response = await axios.put(
+    `http://localhost:3000/courses/${slug}`,
+    courseData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return response.data;
+};
 
 export default function Page() {
   const { push } = useRouter();
+  const { slug } = useParams() as { slug: string };
 
   const [errors, setErrors] = useState<string[]>([]);
-
   const [course, setCourse] = useState<{
     title: string;
     description: string;
@@ -24,6 +40,18 @@ export default function Page() {
     end_date: "",
     image: "",
   });
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["course", slug],
+    queryFn: () => getCourse(slug, "include_lessons=true"),
+    enabled: !!slug,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setCourse({ ...data, image: "" });
+    }
+  }, [data]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -41,6 +69,7 @@ export default function Page() {
     }
   };
 
+  // Handle form submission
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -53,27 +82,33 @@ export default function Page() {
       formData.append("course[image]", course.image);
     }
 
-    // TODO: SEPARATE THIS REQUEST
-    axios
-      .post("http://localhost:3000/courses", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+    // Send PUT request to update the course
+    updateCourse(slug, formData)
       .then((response) => {
-        const { data } = response;
-
-        if (data?.error) {
-          setErrors(data.errors);
+        if (response?.error) {
+          setErrors(response.errors);
         } else {
-          push(`/courses/${data?.slug}`);
+          push(`/courses/${response?.slug}`);
         }
       })
       .catch((error) => {
         console.error("Erro:", error);
-        alert("Erro ao criar o curso.");
+        alert("Erro ao atualizar o curso.");
       });
   };
+
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (isError) {
+    return (
+      <div>
+        Erro ao carregar os dados do curso:{" "}
+        {error instanceof Error ? error.message : "Erro desconhecido"}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -83,11 +118,11 @@ export default function Page() {
         encType="multipart/form-data"
       >
         <div className={styles.backLink}>
-          <Link href="/courses">Voltar</Link>
+          <Link href={`/courses/`}>Voltar</Link>
         </div>
         {errors.length > 0 && (
           <div className={styles.errors}>
-            <h1>Erro ao criar o curso</h1>
+            <h1>Erro ao atualizar o curso</h1>
             <ul>
               {errors.map((error) => (
                 <li key={error}>{error}</li>
@@ -100,6 +135,7 @@ export default function Page() {
           type="text"
           name="title"
           className={styles.input}
+          value={course.title}
           onChange={handleInputChange}
         />
 
@@ -108,6 +144,7 @@ export default function Page() {
           type="text"
           name="description"
           className={styles.input}
+          value={course.description}
           onChange={handleInputChange}
         />
 
@@ -118,6 +155,7 @@ export default function Page() {
           type="date"
           name="start_date"
           className={styles.input}
+          value={course.start_date}
           onChange={handleInputChange}
         />
 
@@ -128,10 +166,23 @@ export default function Page() {
           type="date"
           name="end_date"
           className={styles.input}
+          value={course.end_date}
           onChange={handleInputChange}
         />
 
         <label className={styles.label}>Imagem de Capa:</label>
+        {data.image ? (
+          <img
+            src={data.image as string}
+            alt={`Imagem do curso ${data.title}`}
+            className={styles.courseImage}
+          />
+        ) : (
+          <div className={styles.placeholderImage}>
+            <span>Sem imagem</span>
+          </div>
+        )}
+
         <input
           type="file"
           name="image"

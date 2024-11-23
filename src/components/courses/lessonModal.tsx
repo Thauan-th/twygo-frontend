@@ -46,8 +46,10 @@ export default function LessonModal({
       formData.append("lesson[video]", lesson.video);
     }
 
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/courses/${courseSlug}/lessons`;
+
     axios
-      .post(`http://localhost:3000/courses/${courseSlug}/lessons`, formData, {
+      .post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
