@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Provider } from "@/components/ui/provider"
 import "./globals.css";
+
+import ReactQueryProvider from "@/contexts/src/contexts/react-query-provider";
+
 
 export const metadata: Metadata = {
   title: "Twygo - Cursos",
@@ -15,9 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body >
-        <Provider>
+        <ReactQueryProvider>
           {children}
-        </Provider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

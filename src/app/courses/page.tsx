@@ -1,28 +1,34 @@
 "use client";
 
 import { getCourses } from "@/requests/courses";
-import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Link from "next/link";
-import { Button } from "@/components/ui/button"
+import { useQuery } from "@tanstack/react-query";
 
 export default function Page() {
-  const [courses, setCourses] = useState([]);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["courses"],
+    queryFn: getCourses,
+  });
 
-  useEffect(() => {
-    (async () => {
-      const courses = await getCourses();
-      setCourses(courses);
-    })();
-  }, []);
+  if (error) {
+    return (
+      <div className={styles.noCourses}>
+        <h1>Erro ao carregar cursos</h1>
+      </div>
+    );
+  }
 
-  if (courses.length === 0) {
+
+  if (isPending) {
     return (
       <div className={styles.noCourses}>
         <h1>Nenhum curso encontrado</h1>
       </div>
     );
   }
+
+  const courses = data;
 
   return (
     <div className={styles.container}>
