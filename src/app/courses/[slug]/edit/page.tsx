@@ -186,6 +186,7 @@ export default function Page() {
         <input
           type="file"
           name="image"
+          accept="image/*"
           className={styles.input}
           onChange={handleInputChange}
         />
