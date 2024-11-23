@@ -2,7 +2,7 @@
 import axios from "axios";
 import styles from "./page.module.css";
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 interface Report {
@@ -10,34 +10,35 @@ interface Report {
   created_at: string;
 }
 
+const fetchReports = async (slug: string) => {
+  const response = await axios.get(`http://localhost:3000/courses/${slug}/reports/`);
+  return response.data.results;
+};
+
+const requestNewReport = async (slug: string) => {
+  const response = await axios.post(`http://localhost:3000/courses/${slug}/reports`);
+  return response.data;
+};
+
 export default function Page() {
   const { slug } = useParams() as { slug: string };
 
-  const [reports, setReports] = useState<Report[]>([]);
+  const { isPending, error, data, isLoading, refetch } = useQuery<Report[]>({
+    queryKey: ["courses"],
+    queryFn: () => fetchReports(slug),
+  });
 
-  const requestNewReport = () => {
-    axios
-      .post(`http://localhost:3000/courses/${slug}/reports`)
-      .then((response) => {
-        const { data } = response;
-
-        if (data?.error) {
-          alert("Erro ao criar o relatório.");
-        } else {
-          alert("Relatório criado com sucesso.");
-        }
-      });
+  const handleRequestNewReport = async () => {
+    const result = await requestNewReport(slug);
+    if (result?.error) {
+      alert("Erro ao criar o relatório.");
+    } else {
+      alert("Relatório criado com sucesso.");
+      refetch();
+    }
   };
 
-  useEffect(() => {
-    (async () => {
-      const response = await axios.get(
-        `http://localhost:3000/courses/${slug}/reports/`
-      );
-      const { data } = response;
-      setReports(data.results);
-    })();
-  }, [slug]);
+  const reports = data || [];
 
   return (
     <div className={styles.container}>
@@ -48,42 +49,37 @@ export default function Page() {
       <div className={styles.newReport}>
         <button
           className={styles.newReportButton}
-          onClick={() => requestNewReport()}
+          onClick={handleRequestNewReport}
+          disabled={isLoading}
         >
-          Novo Relatório
+          {isLoading ? "Criando..." : "Novo Relatório"}
         </button>
       </div>
 
-      {reports.length > 0 ? (
-        <>
-          <ul className={styles.reportList}>
-            {reports.map((report: Report, index: number) => (
-              <li key={index} className={styles.reportItem}>
-                <div className={styles.reportDetails}>
-                  <h3 className={styles.reportTitle}>Relatório {index + 1}</h3>
-                  <p className={styles.reportDate}>
-                    Data: {new Date(report.created_at).toLocaleDateString()}
-                  </p>
-                  { report.file ? (
-                    <a
-                    href={report.file}
-                    target="_blank"
-                    className={styles.downloadLink}
-                  >
+      {isLoading ? (
+        <p>Carregando...</p>
+      ) : error ? (
+        <p>Erro ao carregar relatórios</p>
+      ) : reports.length > 0 ? (
+        <ul className={styles.reportList}>
+          {reports.map((report, index) => (
+            <li key={index} className={styles.reportItem}>
+              <div className={styles.reportDetails}>
+                <h3 className={styles.reportTitle}>Relatório {index + 1}</h3>
+                <p className={styles.reportDate}>Data: {report.created_at}</p>
+                {report.file ? (
+                  <a href={report.file} target="_blank" className={styles.downloadLink}>
                     Ver
                   </a>
-                  ) : (
-                    <span className={styles.noFile}>Sem arquivo</span>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </>
+                ) : (
+                  <span className={styles.noFile}>Sem arquivo</span>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
       ) : (
-        <div>
-          <h1 className={styles.courseTitle}>Nenhum relatório encontrado</h1>
-        </div>
+        <h1 className={styles.courseTitle}>Nenhum relatório encontrado</h1>
       )}
     </div>
   );
