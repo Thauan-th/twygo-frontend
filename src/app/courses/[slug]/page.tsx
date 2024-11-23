@@ -50,10 +50,16 @@ export default function Page() {
 
   return (
     <div className={styles.container}>
+      <Link href="/courses">Voltar</Link>
       <div className={styles.header}>
-        <Link href="/courses">Voltar</Link>
-        <button
+        <Link 
           className={styles.editButton}
+          href={`/courses/${slug}/edit`}
+        >
+          Editar
+        </Link>
+        <button
+          className={styles.deleteButton}
           type="button"
           onClick={handleDelete}
         >
