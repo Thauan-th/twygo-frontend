@@ -12,6 +12,8 @@ Projeto destinado a criação de uma SPA (Single Page Application) para a Twygo,
   - [cursos/:slug](#pagina-do-curso)
   - [cursos/:slug/edit](#editar-curso)
   - [cursos/:slug/report](#relatorio-do-curso)
+- [Bibliotecas utilizadas](#bibliotecas-utilizadas)
+
 
 
 ## Como rodar
@@ -56,3 +58,11 @@ Essa rota é responsável por editar um curso.
 
 Essa rota é responsável por exibir e criar relatórios de um curso.
 
+## Bibliotecas utilizadas
+
+Com o foco de manter o projeto com o minimo de dependências possíveis, foram utilizadas as seguintes bibliotecas:
+
+- [React](https://reactjs.org/)
+- [Next.js](https://nextjs.org/)
+- [TanStack/react-query](https://react-query.tanstack.com/)
+- [Axios](https://axios-http.com/)
