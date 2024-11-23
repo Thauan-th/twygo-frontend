@@ -7,7 +7,6 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCourse } from "@/requests/courses";
-import { Course } from "@/types";
 
 const updateCourse = async (slug: string, courseData: FormData) => {
   const response = await axios.put(
@@ -82,7 +81,6 @@ export default function Page() {
       formData.append("course[image]", course.image);
     }
 
-    // Send PUT request to update the course
     updateCourse(slug, formData)
       .then((response) => {
         if (response?.error) {
